@@ -1,15 +1,24 @@
 import * as d3 from "d3";
 import world from "./datasets/world.topojson";
 import * as topojson from "topojson-client";
-import covid_time from "./datasets/2019_nCoV_data.csv";
+const covid_time = require("./datasets/country_time.json");
 
 const MARGIN = { TOP: 10, BOTTOM: 50, LEFT: 50, RIGHT: 10 };
 const WIDTH = 1200 - MARGIN.LEFT - MARGIN.RIGHT;
 const HEIGHT = 1000 - MARGIN.TOP - MARGIN.BOTTOM;
 
+var formatDateIntoMonth = d3.timeFormat("%m");
+var formatDate = d3.timeFormat("%m/%d/%Y");
+var parseDate = d3.timeParse("%m/%d/%y");
+
+var startDate = new Date("01/22/2020");
+var endDate = new Date("03/08/2020");
+
 export default class D3Chart {
   constructor(element) {
     const vis = this;
+    vis.covid_time = covid_time;
+    vis.cur_date = "01/22/2020";
 
     vis.svg = d3
       .select(element)
@@ -39,16 +48,16 @@ export default class D3Chart {
     //A color scale
     vis.colorScale = d3
       .scaleLinear()
-      .domain([0, 10000])
+      .domain([0, 1, 200, 500, 1000, 2000, 10000, 50000])
       .range([
-        "#fce9a2",
+        "#a7dea6",
         "#ffdf6b",
         "#ebab78",
         "#f09a54",
         "#f29e2e",
         "#eb6565",
         "#f04141",
-        "d92e2e"
+        "#d92e2e"
       ]);
 
     //Append multiple color stops by using D3's data/enter step
@@ -63,25 +72,92 @@ export default class D3Chart {
       .attr("stop-color", function(d) {
         return d;
       });
-    d3.csv(covid_time).then(function(dataset) {
-      vis.covid_time = dataset;
-      console.log(dataset.slice(0, 37));
-      d3.json(world).then(function(dataset) {
-        vis.worldData = dataset;
 
-        var countries = topojson.feature(dataset, dataset.objects.countries)
-          .features;
+    var moving = false;
+    var currentValue = 0;
+    var targetValue = WIDTH / 2;
 
-        vis.worldReady(countries);
+    var playButton = d3.select("#play-button");
+
+    var x = d3
+      .scaleTime()
+      .domain([startDate, endDate])
+      .range([0, targetValue])
+      .clamp(true);
+
+    var slider = vis.svg
+      .append("g")
+      .attr("class", "slider")
+      .attr("transform", "translate(" + 10 + "," + 10 + ")");
+
+    slider
+      .append("line")
+      .attr("class", "track")
+      .attr("x1", x.range()[0])
+      .attr("x2", x.range()[1])
+      .select(function() {
+        return this.parentNode.appendChild(this.cloneNode(true));
+      })
+      .attr("class", "track-inset")
+      .select(function() {
+        return this.parentNode.appendChild(this.cloneNode(true));
+      })
+      .attr("class", "track-overlay")
+      .call(
+        d3
+          .drag()
+          .on("start.interrupt", function() {
+            slider.interrupt();
+          })
+          .on("start drag", function() {
+            handle.attr("cx", d3.event.x);
+            currentValue = d3.event.x;
+            vis.cur_date = formatDate(x.invert(currentValue));
+            console.log(formatDate(x.invert(currentValue)));
+            vis.worldReady();
+          })
+      );
+
+    slider
+      .insert("g", ".track-overlay")
+      .attr("class", "ticks")
+      .attr("transform", "translate(0," + 18 + ")")
+      .selectAll("text")
+      .data(x.ticks(10))
+      .enter()
+      .append("text")
+      .attr("x", x)
+      .attr("y", 10)
+      .attr("text-anchor", "middle")
+      .text(function(d) {
+        return formatDateIntoMonth(d);
       });
+
+    var handle = slider
+      .insert("circle", ".track-overlay")
+      .attr("class", "handle")
+      .attr("r", 9);
+
+    var label = slider
+      .append("text")
+      .attr("class", "label")
+      .attr("text-anchor", "middle")
+      .text(formatDate(startDate))
+      .attr("transform", "translate(0," + -25 + ")");
+
+    d3.json(world).then(function(dataset) {
+      vis.worldData = dataset;
+
+      vis.countries = topojson.feature(
+        dataset,
+        dataset.objects.countries
+      ).features;
+
+      vis.worldReady();
     });
   }
-  worldReady(countries) {
+  worldReady() {
     const vis = this;
-
-    console.log("Countries");
-    console.log(countries);
-
     // create a projection with geoMercator
     // center with translate
     // scale with zooming later
@@ -93,17 +169,28 @@ export default class D3Chart {
     // create path using the projection
     var path = d3.geoPath().projection(projection);
 
+    const countries = vis.svg.selectAll("path.country").data(vis.countries);
+
+    // EXIT
+    countries
+      .exit()
+      .transition()
+      .duration(500)
+      .remove();
+
     // add a path for each country
-    vis.svg
-      .selectAll(".country")
-      .data(countries)
+    countries
       .enter()
       .append("path")
+      .merge(countries)
       .attr("class", "country")
       .attr("d", path)
       .style("fill", function(d) {
-        let cases = vis.find_number_cases(d.properties.name);
-        console.log(d, vis.colorScale(cases));
+        let cases = vis.find_number_cases(
+          covid_time,
+          d.properties.name,
+          vis.cur_date
+        );
         return vis.colorScale(cases);
       })
       .on("mousemove", function(event) {
@@ -129,20 +216,24 @@ export default class D3Chart {
         d3.select(this)
           .classed("hover-country", false)
           .style("fill", function(d) {
-            let cases = vis.find_number_cases(d.properties.name);
-            console.log(d, vis.colorScale(cases));
+            let cases = vis.find_number_cases(
+              covid_time,
+              d.properties.name,
+              vis.cur_date
+            );
             return vis.colorScale(cases);
           });
         vis.tooltip.transition().style("opacity", 0);
       });
+    console.log(countries);
   }
-  update() {}
-  find_number_cases(name) {
-    this.covid_time.forEach(data => {
-      if (data.Country === name) {
-        return data.confirmed;
-      }
-    });
-    return 0;
+  find_number_cases(covid_time, name, date) {
+    console.log("finding cases for" + name);
+    if (name in covid_time[date]) {
+      var cases = covid_time[date][name]["confirmed"];
+      return cases;
+    } else {
+      return 0;
+    }
   }
 }
