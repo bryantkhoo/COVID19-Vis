@@ -40,7 +40,7 @@ svg {
 .header {
   margin-top: 50px;
   text-align: left;
-  color: #ddcb9b;
+  color: #ffffff;
   background: rgb(24, 32, 44);
   font-family: "grad", serif;
   font-weight: 700;
@@ -100,7 +100,7 @@ svg {
 
 .tooltip {
   position: absolute;
-  text-align: Left;
+  text-align: center;
   padding: 2px;
   font: 12px sans-serif;
   background: #e4e8f0;
@@ -152,4 +152,40 @@ svg {
   stroke: #000;
   stroke-opacity: 0.5;
   stroke-width: 1.25px;
+}
+
+.flag {
+  width: 30px;
+}
+
+#nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  background-color: rgb(255, 0, 0);
+}
+
+#nav li {
+  float: left;
+  display: inline;
+}
+
+#nav button {
+  display: block;
+  color: rgb(254, 254, 255);
+  background-color: #555e85;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+#nav li button:hover {
+  color: rgb(89, 96, 112);
+  background-color: rgb(104, 180, 190);
+}
+
+.active {
+  color: rgb(89, 96, 112);
+  background-color: #519b97;
 }

@@ -25,6 +25,24 @@ class App extends Component {
             <hr></hr>
           </div>
         </div>
+        <div className="row">
+          <div className="col-xs-offset-1 col-xs-6">
+            <ul id="nav">
+              <li>
+                <button href="#home">World</button>
+              </li>
+              <li>
+                <button href="#news">Stats</button>
+              </li>
+              <li>
+                <button href="#contact">Singapore</button>
+              </li>
+              <li>
+                <button href="#about">News</button>
+              </li>
+            </ul>
+          </div>
+        </div>
         <div className="article">
           <div className="row">
             <div className="col-xs-12">

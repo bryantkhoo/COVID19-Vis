@@ -2,6 +2,7 @@ import * as d3 from "d3";
 import world from "./datasets/world.topojson";
 import * as topojson from "topojson-client";
 const covid_time = require("./datasets/country_time.json");
+const flag_json = require("./datasets/new_flag_country.json");
 
 const MARGIN = { TOP: 10, BOTTOM: 50, LEFT: 50, RIGHT: 10 };
 const WIDTH = 1200 - MARGIN.LEFT - MARGIN.RIGHT;
@@ -225,9 +226,11 @@ export default class D3Chart {
           .style("opacity", 1);
         vis.tooltip
           .html(
-            "<div><p>" +
+            "<div>" +
+              vis.get_flag_html(d.properties.name) +
+              "<h3>" +
               d.properties.name +
-              "</p><p>Confirmed: " +
+              "</h3><p>Confirmed: " +
               cases[0] +
               "</p><p>Deaths: " +
               cases[1] +
@@ -260,6 +263,13 @@ export default class D3Chart {
       return [confirmed, deaths, recovered];
     } else {
       return [0, 0, 0];
+    }
+  }
+  get_flag_html(name) {
+    if (name in flag_json) {
+      return '<img class="flag" src="/flags/' + flag_json[name] + '">';
+    } else {
+      return "";
     }
   }
 }
