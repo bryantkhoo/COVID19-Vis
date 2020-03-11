@@ -28,12 +28,12 @@ svg {
 
 .country {
   stroke: #f8f8f8;
-  stroke-width: 0.3;
+  stroke-width: 0.2;
 }
 
 .hover-country {
   stroke: #f8f8f8;
-  stroke-width: 1;
+  stroke-width: 0.2;
 }
 
 /* Header/Blog Title */
@@ -100,9 +100,7 @@ svg {
 
 .tooltip {
   position: absolute;
-  text-align: center;
-  width: 60px;
-  height: 28px;
+  text-align: Left;
   padding: 2px;
   font: 12px sans-serif;
   background: #e4e8f0;
@@ -117,24 +115,8 @@ svg {
   margin-bottom: 30px;
 }
 
-#play-button {
-  position: absolute;
-  top: 140px;
-  left: 50px;
-  background: #f08080;
-  padding-right: 26px;
-  border-radius: 3px;
-  border: none;
-  color: white;
-  margin: 0;
-  padding: 0 12px;
-  width: 60px;
-  cursor: pointer;
-  height: 20px;
-}
-
-#play-button:hover {
-  background-color: #696969;
+.slider {
+  background: rgb(206, 64, 59);
 }
 
 .ticks {

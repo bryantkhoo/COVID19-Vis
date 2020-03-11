@@ -7,9 +7,7 @@ const MARGIN = { TOP: 10, BOTTOM: 50, LEFT: 50, RIGHT: 10 };
 const WIDTH = 1200 - MARGIN.LEFT - MARGIN.RIGHT;
 const HEIGHT = 1000 - MARGIN.TOP - MARGIN.BOTTOM;
 
-var formatDateIntoMonth = d3.timeFormat("%m");
 var formatDate = d3.timeFormat("%m/%d/%Y");
-var parseDate = d3.timeParse("%m/%d/%y");
 
 var startDate = new Date("01/22/2020");
 var endDate = new Date("03/08/2020");
@@ -18,7 +16,7 @@ export default class D3Chart {
   constructor(element) {
     const vis = this;
     vis.covid_time = covid_time;
-    vis.cur_date = "01/22/2020";
+    vis.cur_date = "01/22/2020"; // start date
 
     vis.svg = d3
       .select(element)
@@ -73,11 +71,8 @@ export default class D3Chart {
         return d;
       });
 
-    var moving = false;
     var currentValue = 0;
     var targetValue = WIDTH / 2;
-
-    var playButton = d3.select("#play-button");
 
     var x = d3
       .scaleTime()
@@ -85,12 +80,12 @@ export default class D3Chart {
       .range([0, targetValue])
       .clamp(true);
 
-    var slider = vis.svg
+    vis.slider = vis.svg
       .append("g")
       .attr("class", "slider")
-      .attr("transform", "translate(" + 10 + "," + 10 + ")");
+      .attr("transform", "translate(" + 75 + "," + 10 + ")");
 
-    slider
+    vis.slider
       .append("line")
       .attr("class", "track")
       .attr("x1", x.range()[0])
@@ -107,7 +102,7 @@ export default class D3Chart {
         d3
           .drag()
           .on("start.interrupt", function() {
-            slider.interrupt();
+            vis.slider.interrupt();
           })
           .on("start drag", function() {
             handle.attr("cx", d3.event.x);
@@ -118,10 +113,10 @@ export default class D3Chart {
           })
       );
 
-    slider
+    vis.slider
       .insert("g", ".track-overlay")
       .attr("class", "ticks")
-      .attr("transform", "translate(0," + 18 + ")")
+      .attr("transform", "translate(0," + 10 + ")")
       .selectAll("text")
       .data(x.ticks(10))
       .enter()
@@ -130,20 +125,15 @@ export default class D3Chart {
       .attr("y", 10)
       .attr("text-anchor", "middle")
       .text(function(d) {
-        return formatDateIntoMonth(d);
+        return formatDate(d);
       });
 
-    var handle = slider
+    vis.sliderLabel = vis.slider.append("text");
+
+    var handle = vis.slider
       .insert("circle", ".track-overlay")
       .attr("class", "handle")
       .attr("r", 9);
-
-    var label = slider
-      .append("text")
-      .attr("class", "label")
-      .attr("text-anchor", "middle")
-      .text(formatDate(startDate))
-      .attr("transform", "translate(0," + -25 + ")");
 
     d3.json(world).then(function(dataset) {
       vis.worldData = dataset;
@@ -161,10 +151,31 @@ export default class D3Chart {
     // create a projection with geoMercator
     // center with translate
     // scale with zooming later
+
+    vis.sliderLabel
+      .text(vis.cur_date)
+      .attr("class", "label")
+      .attr("text-anchor", "middle")
+      .attr("transform", "translate(-75," + 10 + ")");
+
     var projection = d3
       .geoMercator()
-      .translate([WIDTH / 3.2, HEIGHT / 3])
+      .translate([WIDTH / 3.2, HEIGHT / 2.8])
       .scale(100);
+
+    var zoom = d3
+      .zoom()
+      .scaleExtent([1, 50])
+      .translateExtent([
+        [-20, -20],
+        [WIDTH - 300, HEIGHT - 450]
+      ])
+      .on("zoom", function() {
+        vis.svg.selectAll("path").attr("transform", d3.event.transform);
+        vis.slider.raise();
+      });
+
+    vis.svg.call(zoom);
 
     // create path using the projection
     var path = d3.geoPath().projection(projection);
@@ -191,7 +202,7 @@ export default class D3Chart {
           d.properties.name,
           vis.cur_date
         );
-        return vis.colorScale(cases);
+        return vis.colorScale(cases[0]);
       })
       .on("mousemove", function(event) {
         vis.tooltip
@@ -199,6 +210,11 @@ export default class D3Chart {
           .style("left", d3.event.pageX - 51 + "px");
       })
       .on("mouseover", function(d) {
+        let cases = vis.find_number_cases(
+          covid_time,
+          d.properties.name,
+          vis.cur_date
+        );
         console.log(d.properties.name);
         d3.select(this)
           .classed("hover-country", true)
@@ -208,7 +224,17 @@ export default class D3Chart {
           .duration(200)
           .style("opacity", 1);
         vis.tooltip
-          .html("<div><p>" + d.properties.name + "</p></div>")
+          .html(
+            "<div><p>" +
+              d.properties.name +
+              "</p><p>Confirmed: " +
+              cases[0] +
+              "</p><p>Deaths: " +
+              cases[1] +
+              "</p><p>Recovered: " +
+              cases[2] +
+              "</p></div>"
+          )
           .style("left", d3.event.pageX + "px")
           .style("top", d3.event.pageY - 28 + "px");
       })
@@ -221,19 +247,19 @@ export default class D3Chart {
               d.properties.name,
               vis.cur_date
             );
-            return vis.colorScale(cases);
+            return vis.colorScale(cases[0]);
           });
         vis.tooltip.transition().style("opacity", 0);
       });
-    console.log(countries);
   }
   find_number_cases(covid_time, name, date) {
-    console.log("finding cases for" + name);
     if (name in covid_time[date]) {
-      var cases = covid_time[date][name]["confirmed"];
-      return cases;
+      var confirmed = covid_time[date][name]["confirmed"];
+      var deaths = covid_time[date][name]["deaths"];
+      var recovered = covid_time[date][name]["recovered"];
+      return [confirmed, deaths, recovered];
     } else {
-      return 0;
+      return [0, 0, 0];
     }
   }
 }
