@@ -47,7 +47,7 @@ export default class D3Chart {
     //A color scale
     vis.colorScale = d3
       .scaleLinear()
-      .domain([0, 1, 200, 500, 1000, 2000, 10000, 50000])
+      .domain([0, 5, 50, 200, 1000, 2000, 10000, 50000])
       .range([
         "#a7dea6",
         "#ffdf6b",
@@ -168,7 +168,7 @@ export default class D3Chart {
       .zoom()
       .scaleExtent([1, 50])
       .translateExtent([
-        [-20, -20],
+        [0, 0],
         [WIDTH - 300, HEIGHT - 450]
       ])
       .on("zoom", function() {
