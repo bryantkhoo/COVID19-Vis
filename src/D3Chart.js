@@ -27,6 +27,7 @@ export default class D3Chart {
       .attr("preserveAspectRatio", "xMinYMin meet")
       .attr("viewBox", `0 0 800 500`)
       .classed("svg-content-responsive", true)
+      .attr("class", "map")
       .append("g")
       .attr("transform", `translate(${MARGIN.LEFT}, ${MARGIN.TOP})`);
 

@@ -1,10 +1,10 @@
 html {
-  background: rgb(24, 32, 44);
+  background: rgb(253, 246, 232);
 }
 
 body {
   margin: 0;
-  background: rgb(24, 32, 44);
+  background: rgb(253, 246, 232);
 }
 
 hr {
@@ -19,7 +19,7 @@ td {
   font-size: calc(6px + 0.3vw);
 }
 
-svg {
+.map {
   background: rgb(134, 165, 173);
 }
 ::selection {
@@ -40,8 +40,8 @@ svg {
 .header {
   margin-top: 50px;
   text-align: center;
-  color: #ffffff;
-  background: rgb(24, 32, 44);
+  color: rgb(24, 32, 44);
+  background: rgb(253, 246, 232);
   font-family: "grad", serif;
   font-weight: 700;
   font-size: calc(14px + 3vw);
@@ -50,7 +50,7 @@ svg {
 /* Header/Blog Title */
 .subheader {
   text-align: center;
-  background: rgb(24, 32, 44);
+  background: rgb(253, 246, 232);
   font-family: cursive;
   font-weight: black;
   font-size: calc(10px + 1vw);
@@ -58,7 +58,7 @@ svg {
 
 .text-content {
   padding: 20px;
-  color: #ffffff;
+  color: rgb(24, 32, 44);
   font-family: "mr-eaves-xl-sans", sans-serif;
   font-size: calc(12px + 0.5vw);
   line-height: 1.8;
@@ -67,7 +67,7 @@ svg {
 
 .query-content {
   padding-top: 10px;
-  color: #ffffff;
+  color: rgb(24, 32, 44);
   font-family: "grad", serif;
   font-size: calc(12px + 1vw);
   line-height: 1.8;
@@ -108,9 +108,9 @@ svg {
   border-radius: 8px;
   pointer-events: none;
 
-  -moz-box-shadow:    0px 8px 5px -6px rgb(0, 0, 0);
+  -moz-box-shadow: 0px 8px 5px -6px rgb(0, 0, 0);
   -webkit-box-shadow: 0px 8px 5px -6px rgb(0, 0, 0);
-  box-shadow:         0px 8px 5px -6px rgb(0, 0, 0);
+  box-shadow: 0px 8px 5px -6px rgb(0, 0, 0);
 }
 
 .svg-content-responsive {
@@ -163,7 +163,7 @@ svg {
 }
 
 #nav ul {
-  text-align:center;
+  text-align: center;
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -198,4 +198,25 @@ svg {
 .nav-container {
   display: flex;
   justify-content: center;
+}
+.abc {
+  color: #5f0813;
+}
+
+.linegroup1 {
+  fill: none;
+  stroke-width: 3px;
+}
+
+.linegroup2 {
+  fill: none;
+  stroke-width: 1px;
+}
+
+.tick line {
+  opacity: 0.2;
+}
+.zoom {
+  cursor: move;
+  fill: none;
 }

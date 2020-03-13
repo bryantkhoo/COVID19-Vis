@@ -3,9 +3,9 @@ import ChartWrapper from "./ChartWrapper";
 import content from "./content/content";
 
 class App extends Component {
-  state = {
-    topic: "nominated"
-  };
+  // state = {
+  //   topic: "map"
+  // };
 
   toggleNomineeAwards = topic => this.setState({ topic });
 
@@ -25,7 +25,7 @@ class App extends Component {
             <hr></hr>
           </div>
         </div>
-        <div className="row">
+        {/* <div className="row">
           <div className="nav-container col-xs-offset-1 col-xs-10">
             <ul id="nav">
               <li>
@@ -42,14 +42,16 @@ class App extends Component {
               </li>
             </ul>
           </div>
-        </div>
+        </div> */}
         <div className="article">
           <div className="row">
             <div className="col-xs-12">
-              <ChartWrapper
-                className="vis-center-container"
-                topic={this.state.topic}
-              />
+              <ChartWrapper className="vis-center-container" topic={"map"} />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-xs-offset-2 col-xs-8">
+              <ChartWrapper className="vis-center-container" topic={"line"} />
             </div>
           </div>
           <div className="row">
