@@ -13,7 +13,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className="row">
-          <div className="header col-xs-offset-1 col-xs-11">
+          <div className="header col-xs-offset-2 col-xs-8">
             <p>Novel Corona Virus 2019</p>
             <div className="subheader">
               <p>A visualisation by KJSBryant</p>
@@ -21,12 +21,12 @@ class App extends Component {
           </div>
         </div>
         <div className="row">
-          <div className="col-xs-offset-1 col-xs-6">
+          <div className="col-xs-offset-2 col-xs-8">
             <hr></hr>
           </div>
         </div>
         <div className="row">
-          <div className="col-xs-offset-1 col-xs-6">
+          <div className="nav-container col-xs-offset-1 col-xs-10">
             <ul id="nav">
               <li>
                 <button href="#home">World</button>
