@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ChartWrapper from "./ChartWrapper";
-import content from "./content/content";
+import BarChartWrapper from "./BarChartWrapper";
 
 class App extends Component {
   // state = {
@@ -21,32 +21,29 @@ class App extends Component {
           </div>
         </div>
         <div className="row">
-          <div className="col-xs-offset-2 col-xs-8">
+          <div className="col-xs-offset-1 col-xs-10">
             <hr></hr>
           </div>
         </div>
-        {/* <div className="row">
-          <div className="nav-container col-xs-offset-1 col-xs-10">
-            <ul id="nav">
-              <li>
-                <button href="#home">World</button>
-              </li>
-              <li>
-                <button href="#news">Stats</button>
-              </li>
-              <li>
-                <button href="#contact">Singapore</button>
-              </li>
-              <li>
-                <button href="#about">News</button>
-              </li>
-            </ul>
-          </div>
-        </div> */}
         <div className="article">
+          <div className="row">
+            <div className="query-content col-xs-offset-1 col-xs-10">
+              <h2>Worldview from 22 Jan 2020 to 08 Mar 2020</h2>
+            </div>
+          </div>
           <div className="row">
             <div className="col-xs-12">
               <ChartWrapper className="vis-center-container" topic={"map"} />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-xs-offset-1 col-xs-10">
+              <hr></hr>
+            </div>
+          </div>
+          <div className="row">
+            <div className="query-content col-xs-offset-1 col-xs-10">
+              <h2>Virus Spread Rate for top 10 infected countries</h2>
             </div>
           </div>
           <div className="row">
@@ -55,36 +52,102 @@ class App extends Component {
             </div>
           </div>
           <div className="row">
-            <div className="col-xs-offset-2 col-xs-8">
-              <p className="text-content">{content[0].text}</p>
+            <div className="col-xs-offset-1 col-xs-10">
+              <hr></hr>
             </div>
-            <div className="col-xs-1">
-              <div className="row">
-                <button
-                  className="float"
-                  onClick={() => this.toggleNomineeAwards("nominated")}
-                >
-                  1
-                </button>
-              </div>
-              <div className="row">
-                <button
-                  className="float"
-                  onClick={() => this.toggleNomineeAwards("awarded")}
-                >
-                  2
-                </button>
-              </div>
+          </div>
+          <div className="row">
+            <div className="query-content col-xs-offset-1 col-xs-8">
+              <h2>Expediture on healthcare per person</h2>
             </div>
           </div>
           <div className="row">
             <div className="col-xs-offset-2 col-xs-8">
-              <p className="query-content">{content[1].query}</p>
+              <BarChartWrapper
+                className="vis-center-container"
+                topic={"expenditure"}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-xs-offset-1 col-xs-10">
+              <hr></hr>
+            </div>
+          </div>
+          <div className="row">
+            <div className="query-content col-xs-offset-1 col-xs-8">
+              <h2>
+                Percent of population using safely managed sanitation services
+              </h2>
             </div>
           </div>
           <div className="row">
             <div className="col-xs-offset-2 col-xs-8">
-              <p className="query-content">{content[2].query}</p>
+              <BarChartWrapper
+                className="vis-center-container"
+                topic={"sanitation"}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-xs-offset-1 col-xs-10">
+              <hr></hr>
+            </div>
+          </div>
+          <div className="row">
+            <div className="query-content col-xs-offset-1 col-xs-8">
+              <h2>Hospital beds per 10,000 people</h2>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-xs-offset-2 col-xs-8">
+              <BarChartWrapper
+                className="vis-center-container"
+                topic={"hospitalbeds"}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-xs-offset-1 col-xs-10">
+              <hr></hr>
+            </div>
+          </div>
+          <div className="row">
+            <div className="query-content col-xs-offset-1 col-xs-8">
+              <h2>Health regulation core capability scores</h2>
+              <p className="text-content"> Average of international surveys</p>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-xs-offset-2 col-xs-8">
+              <BarChartWrapper
+                className="vis-center-container"
+                topic={"healthregscores"}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-xs-offset-1 col-xs-10">
+              <hr></hr>
+            </div>
+          </div>
+          <div className="row">
+            <div className="query-content col-xs-offset-1 col-xs-8">
+              <h2>Health Professionals per 10,000 people</h2>
+            </div>
+            <p className="text-content"> Average of international surveys</p>
+          </div>
+          <div className="row">
+            <div className="col-xs-offset-2 col-xs-8">
+              <BarChartWrapper
+                className="vis-center-container"
+                topic={"healthprofessionals"}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-xs-offset-1 col-xs-10">
+              <hr></hr>
             </div>
           </div>
         </div>

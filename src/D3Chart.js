@@ -72,6 +72,28 @@ export default class D3Chart {
       .attr("stop-color", function(d) {
         return d;
       });
+    var legendScale = d3
+      .scaleLinear()
+      .range([0, 100])
+      .domain([0, 80000]);
+    var legendAxis = d3
+      .axisBottom(legendScale)
+      .tickSize(8 * 2)
+      .tickValues([0, 80000]);
+    vis.svg
+      .append("g")
+      .call(legendAxis)
+      .attr("transform", "translate(-40,40)")
+      .select(".domain")
+      .remove();
+
+    vis.legendRect = vis.svg
+      .append("rect")
+      .attr("x", -40)
+      .attr("y", 40)
+      .attr("width", 100)
+      .attr("height", 8)
+      .style("fill", "url(#linear-gradient)");
 
     var currentValue = 0;
     var targetValue = WIDTH / 2;
@@ -175,6 +197,7 @@ export default class D3Chart {
       .on("zoom", function() {
         vis.svg.selectAll("path").attr("transform", d3.event.transform);
         vis.slider.raise();
+        vis.legendRect.raise();
       });
 
     vis.svg.call(zoom);
@@ -268,7 +291,9 @@ export default class D3Chart {
   }
   get_flag_html(name) {
     if (name in flag_json) {
-      return '<img class="flag" src="/flags/' + flag_json[name] + '">';
+      return (
+        '<img class="flag" src="/COVID19-Vis/flags/' + flag_json[name] + '">'
+      );
     } else {
       return "";
     }

@@ -1,6 +1,6 @@
 {
-  "name": "cs5346-bryant",
-  "homepage": "http://bryantkhoo.github.io/oscar-vis",
+  "name": "cs5346-bryant-covid19",
+  "homepage": "http://bryantkhoo.github.io/COVID19-Vis",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

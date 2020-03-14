@@ -90,6 +90,7 @@ export default class ZoomChart {
       .scaleOrdinal()
       .domain(growth_rate)
       .range([
+        "#b8809e",
         "#be2f2f",
         "#ee8e20",
         "#f3e413",
@@ -97,9 +98,7 @@ export default class ZoomChart {
         "#1d9619",
         "#199690",
         "#194b96",
-        "#8858a8",
-        "#b8809e",
-        "#5f0813"
+        "#8858a8"
       ]);
 
     // Add one dot in the legend for each name.
@@ -118,6 +117,29 @@ export default class ZoomChart {
       .attr("height", size)
       .style("fill", function(d) {
         return vis.myColor(d.country);
+      })
+      .on("click", function(d) {
+        console.log(d.country.replace(/\s/g, ""));
+        var currentColor = d3.select(this).style("fill");
+        if (currentColor === "rgb(26, 37, 59)") {
+          currentColor = vis.myColor(d.country);
+        } else {
+          currentColor = "#1a253b";
+        }
+        d3.select(this).style("fill", currentColor);
+        var newOpacity = d3
+          .select("#" + d.country.replace(/\s/g, ""))
+          .style("opacity");
+        console.log(newOpacity);
+        if (newOpacity === "0") {
+          newOpacity = "1";
+        } else {
+          newOpacity = "0";
+        }
+        d3.select("#" + d.country.replace(/\s/g, "")).style(
+          "opacity",
+          newOpacity
+        );
       });
 
     // Add one dot in the legend for each name.
@@ -169,6 +191,9 @@ export default class ZoomChart {
       .append("path")
       .merge(linegroup)
       .attr("class", "linegroup1")
+      .attr("id", function(d) {
+        return d.country.replace(/\s/g, "");
+      })
       .attr("d", function(d) {
         return vis.line(d.conf_pop_rate);
       })
@@ -335,7 +360,9 @@ Or use api x.domain(d3.event.selection.map(vis.xScale2.invert, vis.xScale2));
   }
   get_flag_html(name) {
     if (name in flag_json) {
-      return '<img class="flag" src="/flags/' + flag_json[name] + '">';
+      return (
+        '<img class="flag" src="/COVID19-Vis/flags/' + flag_json[name] + '">'
+      );
     } else {
       return "";
     }

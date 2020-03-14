@@ -57,21 +57,20 @@ td {
 }
 
 .text-content {
-  padding: 20px;
+  padding: 2px;
   color: rgb(24, 32, 44);
   font-family: "mr-eaves-xl-sans", sans-serif;
   font-size: calc(12px + 0.5vw);
   line-height: 1.8;
-  text-align: justify;
+  text-align: left;
 }
 
 .query-content {
-  padding-top: 10px;
+  padding-top: 2px;
   color: rgb(24, 32, 44);
   font-family: "grad", serif;
   font-size: calc(12px + 1vw);
-  line-height: 1.8;
-  text-align: justify;
+  text-align: left;
   font-weight: 700;
 }
 
@@ -200,7 +199,7 @@ td {
   justify-content: center;
 }
 .abc {
-  color: #5f0813;
+  color: #1a253b;
 }
 
 .linegroup1 {
