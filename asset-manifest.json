@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.js": "/COVID19-Vis/static/js/main.2ce4da64.chunk.js",
-    "main.js.map": "/COVID19-Vis/static/js/main.2ce4da64.chunk.js.map",
+    "main.js": "/COVID19-Vis/static/js/main.d43f8eb0.chunk.js",
+    "main.js.map": "/COVID19-Vis/static/js/main.d43f8eb0.chunk.js.map",
     "runtime-main.js": "/COVID19-Vis/static/js/runtime-main.2d136813.js",
     "runtime-main.js.map": "/COVID19-Vis/static/js/runtime-main.2d136813.js.map",
     "static/js/2.a5a71da2.chunk.js": "/COVID19-Vis/static/js/2.a5a71da2.chunk.js",
     "static/js/2.a5a71da2.chunk.js.map": "/COVID19-Vis/static/js/2.a5a71da2.chunk.js.map",
     "index.html": "/COVID19-Vis/index.html",
-    "precache-manifest.bc4ce184a3b5ce16fd0364e929b5742c.js": "/COVID19-Vis/precache-manifest.bc4ce184a3b5ce16fd0364e929b5742c.js",
+    "precache-manifest.63bbbe2bd529160d48df055cb587683d.js": "/COVID19-Vis/precache-manifest.63bbbe2bd529160d48df055cb587683d.js",
     "service-worker.js": "/COVID19-Vis/service-worker.js",
     "static/js/2.a5a71da2.chunk.js.LICENSE.txt": "/COVID19-Vis/static/js/2.a5a71da2.chunk.js.LICENSE.txt",
     "static/media/who_dataset.csv": "/COVID19-Vis/static/media/who_dataset.c1e41c3a.csv",
@@ -16,6 +16,6 @@
   "entrypoints": [
     "static/js/runtime-main.2d136813.js",
     "static/js/2.a5a71da2.chunk.js",
-    "static/js/main.2ce4da64.chunk.js"
+    "static/js/main.d43f8eb0.chunk.js"
   ]
 }
