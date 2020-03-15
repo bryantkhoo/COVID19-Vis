@@ -43,7 +43,7 @@ class App extends Component {
           </div>
           <div className="row">
             <div className="query-content col-xs-offset-1 col-xs-10">
-              <p>Virus Spread Rate for top 10 infected countries</p>
+              <p>Virus Spread Rate for most infected countries</p>
             </div>
           </div>
           <div className="row">
