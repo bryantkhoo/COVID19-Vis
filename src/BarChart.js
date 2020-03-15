@@ -46,15 +46,15 @@ export default class D3Chart {
       .scaleOrdinal()
       .domain(who_data)
       .range([
+        "#b8809e",
+        "#be2f2f",
+        "#ee8e20",
         "#f3e413",
         "#99eb2e",
         "#1d9619",
         "#199690",
         "#194b96",
-        "#8858a8",
-        "#b8809e",
-        "#be2f2f",
-        "#ee8e20"
+        "#8858a8"
       ]);
 
     d3.csv(who_data).then(function(dataset) {
