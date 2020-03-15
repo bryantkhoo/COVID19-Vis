@@ -53,7 +53,6 @@ export default class D3Chart {
         "#194b96",
         "#8858a8",
         "#b8809e",
-        "#5f0813",
         "#be2f2f",
         "#ee8e20"
       ]);
