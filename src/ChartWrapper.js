@@ -11,7 +11,7 @@ export default class ChartWrapper extends Component {
       });
     } else if (this.props.topic === "line") {
       this.setState({
-        chart: new ZoomChart(this.refs.line)
+        chart: new ZoomChart(this.refs.line, this.props.statistic)
       });
     }
   }

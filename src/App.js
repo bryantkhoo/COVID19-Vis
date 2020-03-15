@@ -28,7 +28,7 @@ class App extends Component {
         <div className="article">
           <div className="row">
             <div className="query-content col-xs-offset-1 col-xs-10">
-              <h2>Worldview from 22 Jan 2020 to 08 Mar 2020</h2>
+              <p>Worldview from 22 Jan 2020 to 08 Mar 2020</p>
             </div>
           </div>
           <div className="row">
@@ -43,12 +43,54 @@ class App extends Component {
           </div>
           <div className="row">
             <div className="query-content col-xs-offset-1 col-xs-10">
-              <h2>Virus Spread Rate for top 10 infected countries</h2>
+              <p>Virus Spread Rate for top 10 infected countries</p>
             </div>
           </div>
           <div className="row">
             <div className="col-xs-offset-2 col-xs-8">
-              <ChartWrapper className="vis-center-container" topic={"line"} />
+              <ChartWrapper
+                className="vis-center-container"
+                topic={"line"}
+                statistic={"conf_pop_rate"}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-xs-offset-1 col-xs-10">
+              <hr></hr>
+            </div>
+          </div>
+          <div className="row">
+            <div className="query-content col-xs-offset-1 col-xs-10">
+              <p>Deaths per confirmed case</p>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-xs-offset-2 col-xs-8">
+              <ChartWrapper
+                className="vis-center-container"
+                topic={"line"}
+                statistic={"death_rate"}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-xs-offset-1 col-xs-10">
+              <hr></hr>
+            </div>
+          </div>
+          <div className="row">
+            <div className="query-content col-xs-offset-1 col-xs-10">
+              <p>Recovered case per confirmed case</p>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-xs-offset-2 col-xs-8">
+              <ChartWrapper
+                className="vis-center-container"
+                topic={"line"}
+                statistic={"rec_rate"}
+              />
             </div>
           </div>
           <div className="row">
@@ -58,7 +100,7 @@ class App extends Component {
           </div>
           <div className="row">
             <div className="query-content col-xs-offset-1 col-xs-8">
-              <h2>Expediture on healthcare per person</h2>
+              <p>Expediture on healthcare per person</p>
             </div>
           </div>
           <div className="row">
@@ -76,9 +118,9 @@ class App extends Component {
           </div>
           <div className="row">
             <div className="query-content col-xs-offset-1 col-xs-8">
-              <h2>
+              <p>
                 Percent of population using safely managed sanitation services
-              </h2>
+              </p>
             </div>
           </div>
           <div className="row">
@@ -96,7 +138,7 @@ class App extends Component {
           </div>
           <div className="row">
             <div className="query-content col-xs-offset-1 col-xs-8">
-              <h2>Hospital beds per 10,000 people</h2>
+              <p>Hospital beds per 10,000 people</p>
             </div>
           </div>
           <div className="row">
@@ -113,8 +155,10 @@ class App extends Component {
             </div>
           </div>
           <div className="row">
-            <div className="query-content col-xs-offset-1 col-xs-8">
-              <h2>Health regulation core capability scores</h2>
+            <div className="col-xs-offset-1 col-xs-8">
+              <p className="query-content">
+                Health regulation core capability scores
+              </p>
               <p className="text-content"> Average of international surveys</p>
             </div>
           </div>
@@ -133,9 +177,8 @@ class App extends Component {
           </div>
           <div className="row">
             <div className="query-content col-xs-offset-1 col-xs-8">
-              <h2>Health Professionals per 10,000 people</h2>
+              <p>Health Professionals per 10,000 people</p>
             </div>
-            <p className="text-content"> Average of international surveys</p>
           </div>
           <div className="row">
             <div className="col-xs-offset-2 col-xs-8">

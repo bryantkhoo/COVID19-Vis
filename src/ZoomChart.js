@@ -13,8 +13,23 @@ var margin = { top: 20, right: 20, bottom: 110, left: 50 },
   height2 = 500 - margin2.top - margin2.bottom;
 
 export default class ZoomChart {
-  constructor(element) {
+  constructor(element, statistic) {
     const vis = this;
+    vis.statistic = statistic;
+    vis.statisticString = "";
+    vis.statisticDomain = 1;
+    if (vis.statistic === "conf_pop_rate") {
+      vis.statisticString = "Virus Spread Rate per million citizens";
+      vis.statisticDomain = 1;
+    } else if (vis.statistic === "death_rate") {
+      vis.statisticString = "Deaths per confirmed case";
+      vis.statisticDomain = 0.4;
+    } else if (vis.statistic === "rec_rate") {
+      vis.statisticString = "Recovered cases per confirmed case";
+      vis.statisticDomain = 1.2;
+    }
+    console.log(vis.statistic);
+
     console.log("growth_rate");
     console.log(growth_rate);
     vis.growth_rate = growth_rate;
@@ -55,12 +70,12 @@ export default class ZoomChart {
       .attr("text-anchor", "middle")
       .attr("transform", "rotate(-90)");
     vis.xLabel.text("Days from 01/22/2020");
-    vis.yLabel.text("Virus Spread Rate per million citizens");
+    vis.yLabel.text(vis.statisticString);
 
     vis.yScale = d3
       .scaleLinear()
       .range([0, height])
-      .domain([1, 0]);
+      .domain([vis.statisticDomain, 0]);
     //add x axis
     vis.xScale = d3
       .scaleLinear()
@@ -68,7 +83,7 @@ export default class ZoomChart {
       .domain([
         0,
         d3.max(growth_rate, function(d) {
-          return d.conf_pop_rate.length;
+          return d[vis.statistic].length;
         })
       ]); //scaleBand is used for  bar chart
 
@@ -78,7 +93,7 @@ export default class ZoomChart {
       .domain([
         0,
         d3.max(growth_rate, function(d) {
-          return d.conf_pop_rate.length;
+          return d[vis.statistic].length;
         })
       ]);
     vis.yScale2 = d3
@@ -119,7 +134,9 @@ export default class ZoomChart {
         return vis.myColor(d.country);
       })
       .on("click", function(d) {
-        console.log(d.country.replace(/\s/g, ""));
+        console.log(
+          d.country.replace(/\s/g, "") + vis.statisticString.replace(/\s/g, "")
+        );
         var currentColor = d3.select(this).style("fill");
         if (currentColor === "rgb(26, 37, 59)") {
           currentColor = vis.myColor(d.country);
@@ -128,7 +145,11 @@ export default class ZoomChart {
         }
         d3.select(this).style("fill", currentColor);
         var newOpacity = d3
-          .select("#" + d.country.replace(/\s/g, ""))
+          .select(
+            "#" +
+              d.country.replace(/\s/g, "") +
+              vis.statisticString.replace(/\s/g, "")
+          )
           .style("opacity");
         console.log(newOpacity);
         if (newOpacity === "0") {
@@ -136,10 +157,11 @@ export default class ZoomChart {
         } else {
           newOpacity = "0";
         }
-        d3.select("#" + d.country.replace(/\s/g, "")).style(
-          "opacity",
-          newOpacity
-        );
+        d3.select(
+          "#" +
+            d.country.replace(/\s/g, "") +
+            vis.statisticString.replace(/\s/g, "")
+        ).style("opacity", newOpacity);
       });
 
     // Add one dot in the legend for each name.
@@ -192,10 +214,12 @@ export default class ZoomChart {
       .merge(linegroup)
       .attr("class", "linegroup1")
       .attr("id", function(d) {
-        return d.country.replace(/\s/g, "");
+        return (
+          d.country.replace(/\s/g, "") + vis.statisticString.replace(/\s/g, "")
+        );
       })
       .attr("d", function(d) {
-        return vis.line(d.conf_pop_rate);
+        return vis.line(d[vis.statistic]);
       })
       .attr("stroke", function(d) {
         return vis.myColor(d.country);
@@ -216,7 +240,8 @@ export default class ZoomChart {
               vis.get_flag_html(d.country) +
               "<h3>" +
               d.country +
-              "'s spread rate (per mil)" +
+              "'s " +
+              vis.statisticString +
               "</p></div>"
           )
           .style("left", d3.event.pageX + "px")
@@ -252,7 +277,7 @@ export default class ZoomChart {
       .merge(linegroup)
       .attr("class", "linegroup2")
       .attr("d", function(d) {
-        return vis.line2(d.conf_pop_rate);
+        return vis.line2(d[vis.statistic]);
       })
       .attr("stroke", function(d) {
         return vis.myColor(d.country);
@@ -317,7 +342,7 @@ export default class ZoomChart {
       if (d3.event.sourceEvent && d3.event.sourceEvent.type === "brush") return; // ignore zoom-by-brush
       vis.xScale.domain(d3.event.transform.rescaleX(vis.xScale2).domain());
       vis.focus.selectAll(".linegroup1").attr("d", function(d) {
-        return vis.line(d.conf_pop_rate);
+        return vis.line(d[vis.statistic]);
       });
       xAxisGroup.call(xAxis); //rescale x
 
@@ -343,7 +368,7 @@ Or use api x.domain(d3.event.selection.map(vis.xScale2.invert, vis.xScale2));
       ]);
 
       vis.focus.selectAll(".linegroup1").attr("d", function(d) {
-        return vis.line(d.conf_pop_rate);
+        return vis.line(d[vis.statistic]);
       });
       xAxisGroup.call(xAxis); //rescale x
     }

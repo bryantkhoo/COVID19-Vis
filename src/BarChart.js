@@ -1,7 +1,7 @@
 import * as d3 from "d3";
 import who_data from "./datasets/who_dataset.csv";
 const flag_json = require("./datasets/new_flag_country.json");
-const MARGIN = { TOP: 10, BOTTOM: 70, LEFT: 150, RIGHT: 350 };
+const MARGIN = { TOP: 10, BOTTOM: 70, LEFT: 150, RIGHT: 360 };
 const WIDTH = 1200 - MARGIN.LEFT - MARGIN.RIGHT;
 const HEIGHT = 600 - MARGIN.TOP - MARGIN.BOTTOM;
 
